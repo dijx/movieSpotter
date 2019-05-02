@@ -31,23 +31,17 @@ public class EpgXmlParser {
     }
 
     private void doParse() {
-    //public ArrayList<Programme> parseXmlTvData() {
 
         log.info("XML parser will try to call EpgXmlLoader.loadEpgData");
 
         Document doc = epgXmlLoader.loadEpgData();
-/*
-        String ignore = ConfigLoader.properties.getProperty("Ignore");
-        String onlyLoad = ConfigLoader.properties.getProperty("OnlyLoad");
-*/
+
         String ignore = configLoader.getProperties().getProperty("Ignore");
         String onlyLoad = configLoader.getProperties().getProperty("OnlyLoad");
 
         EpgDateConverter epgDateConverter = new EpgDateConverter();
 
         NodeList channelsList = doc.getDocumentElement().getElementsByTagName("programme");
-
-//        ArrayList<Programme> tvProgrammes = new ArrayList<>();
 
         for (int i = 0; i < channelsList.getLength(); i++) {
 
@@ -65,8 +59,8 @@ public class EpgXmlParser {
             programme
                     .setStart(epgDateConverter
                             .ToLocalDateTime(node.getAttributes()
-                                            .getNamedItem("start")
-                                            .getNodeValue()
+                                    .getNamedItem("start")
+                                    .getNodeValue()
                             )
                     );
 
@@ -74,8 +68,8 @@ public class EpgXmlParser {
             programme
                     .setStop(epgDateConverter
                             .ToLocalDateTime(node.getAttributes()
-                                            .getNamedItem("stop")
-                                            .getNodeValue()
+                                    .getNamedItem("stop")
+                                    .getNodeValue()
                             )
                     );
 
@@ -147,9 +141,7 @@ public class EpgXmlParser {
                 }
             }
 
-            //programme.setId((programme.getChannel() + programme.getStart()).hashCode());
-
-            if (programmeDao.findByChannelAndDate(programme.getChannel(), programme.getStart(),programme.getStop()).isEmpty()) {
+            if (programmeDao.findByChannelAndDate(programme.getChannel(), programme.getStart(), programme.getStop()).isEmpty()) {
 
                 try {
                     programmeDao.save(programme);
@@ -157,13 +149,9 @@ public class EpgXmlParser {
                     log.error("SQL transaction error: " + e);
                 }
             } else {
-                log.warn("PROGRAMME table: duplicate ID "+programme.getStart()+programme.getChannel());
+                log.warn("PROGRAMME table: duplicate ID " + programme.getStart() + programme.getChannel());
             }
-
-    //        tvProgrammes.add(programme);
         }
-  //      log.info("Programmes objects in memory: " + String.valueOf(tvProgrammes.size()));
-        log.info("Number of programmes in XML file: " + String.valueOf(channelsList.getLength()));
-  //      return tvProgrammes;
+        log.info("Number of programmes in XML file: " + channelsList.getLength());
     }
 }

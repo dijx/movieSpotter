@@ -28,7 +28,6 @@ import org.slf4j.LoggerFactory;
 @WebServlet(urlPatterns = {"/programme/detail"})
 public class ProgrammeDetailsServlet extends HttpServlet {
 
-    private NumberUtils numberUtils = new NumberUtils();
     private Logger log = LoggerFactory.getLogger(this.getClass().getName());
 
     @Inject
@@ -45,9 +44,7 @@ public class ProgrammeDetailsServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        response.setContentType("text/html;charset=UTF-8");
-
-        int id = (numberUtils.toInt(request.getParameter("id"), 0));
+        int id = (NumberUtils.toInt(request.getParameter("id"), 0));
 
         Programme detailed = programmeDao.findById(id);
 

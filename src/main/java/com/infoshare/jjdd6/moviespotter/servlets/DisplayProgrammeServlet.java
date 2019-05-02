@@ -34,8 +34,6 @@ public class DisplayProgrammeServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        response.setContentType("text/html;charset=UTF-8");
-
         List <Programme> programmeList = programmeDao.findByChannel(request.getParameter("ch1"));
         programmeList.addAll(programmeDao.findByChannel(request.getParameter("ch2")));
         programmeList.addAll(programmeDao.findByChannel(request.getParameter("ch3")));

@@ -28,14 +28,11 @@ public class DisplayMovieServlet extends HttpServlet {
     @Inject
     FilmWebBrowser filmWebBrowser;
 
-    private NumberUtils numberUtils = new NumberUtils();
     private Logger log = LoggerFactory.getLogger(this.getClass().getName());
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        response.setContentType("text/html;charset=UTF-8");
-
-        Long id = (numberUtils.toLong(request.getParameter("fwID"), 0));
+        Long id = (NumberUtils.toLong(request.getParameter("fwID"), 0));
 
         Map<String, Object> model = new HashMap<>();
 
